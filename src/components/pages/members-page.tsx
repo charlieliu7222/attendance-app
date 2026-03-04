@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useAppState } from '@/hooks/use-app-state'
 import { MemberCard } from '@/components/cards/member-card'
 import { AbsenceReasonDialog } from '@/components/modals/absence-reason-dialog'
-import { getAttendanceStatus } from '@/lib/parse-raw-data'
+import { getAttendanceStatus, getLunchStatus } from '@/lib/parse-raw-data'
 import { api } from '@/lib/api'
 
 export function MembersPage() {
@@ -19,6 +19,7 @@ export function MembersPage() {
   if (!currentDate) return null
 
   const dateLabel = currentDate.label
+  const hasLunchCol = currentDate.lunchCol !== undefined
 
   const handleSetStatus = async (memberIndex: number, status: 'present' | 'late' | 'absent') => {
     const member = members[memberIndex]
@@ -42,6 +43,25 @@ export function MembersPage() {
 
     // Fire API call in background
     await api.update(currentSheet, member.row, currentDate.col + 1, value)
+  }
+
+  const handleToggleLunch = async (memberIndex: number) => {
+    const member = members[memberIndex]
+    if (!member || !currentDate.lunchCol) return
+
+    const currentVal = getLunchStatus(member.lunch[dateLabel] || '')
+    const newValue = currentVal ? '' : 'v'
+
+    // Optimistic update
+    dispatch({
+      type: 'UPDATE_MEMBER_LUNCH',
+      memberIndex,
+      dateLabel,
+      value: newValue,
+    })
+
+    // Fire API call in background
+    await api.update(currentSheet, member.row, currentDate.lunchCol + 1, newValue)
   }
 
   const handleAbsenceReason = async (reason: string) => {
@@ -71,6 +91,7 @@ export function MembersPage() {
           const rawVal = member.attendance[dateLabel] || ''
           const status = getAttendanceStatus(rawVal)
           const reason = status === 'absent' && rawVal !== '缺席' ? rawVal : undefined
+          const hasLunch = hasLunchCol ? getLunchStatus(member.lunch[dateLabel] || '') : undefined
 
           return (
             <MemberCard
@@ -78,7 +99,9 @@ export function MembersPage() {
               name={member.name}
               status={status}
               reason={reason}
+              hasLunch={hasLunch}
               onSetStatus={(s) => handleSetStatus(idx, s)}
+              onToggleLunch={hasLunchCol ? () => handleToggleLunch(idx) : undefined}
             />
           )
         })}

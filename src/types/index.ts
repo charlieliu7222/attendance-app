@@ -1,6 +1,7 @@
 export interface DateInfo {
   col: number
   label: string
+  lunchCol?: number // 帶便當欄位的 column index
 }
 
 export interface MemberInfo {
@@ -8,6 +9,7 @@ export interface MemberInfo {
   name: string
   group: string
   attendance: Record<string, string>
+  lunch: Record<string, string> // 帶便當狀態 (per date)
 }
 
 export interface ParsedData {

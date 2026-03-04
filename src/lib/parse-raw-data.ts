@@ -24,7 +24,21 @@ export function parseRawData(data: string[][]): ParsedData {
   const dates: DateInfo[] = []
   for (let c = dateCol + 1; c < data[dateRow].length; c++) {
     const val = data[dateRow][c].trim()
-    if (val) dates.push({ col: c, label: val })
+    if (!val || val === '帶便當') continue
+    dates.push({ col: c, label: val })
+  }
+
+  // 偵測「帶便當」欄位：檢查日期欄的下一欄是否為「帶便當」
+  for (let i = 0; i < dates.length; i++) {
+    const nextCol = dates[i].col + 1
+    // 確保 nextCol 不是另一個日期欄
+    const isNextDate = dates.some((d) => d.col === nextCol)
+    if (!isNextDate && nextCol < data[dateRow].length) {
+      const headerVal = (data[dateRow][nextCol] || '').trim()
+      if (headerVal === '帶便當') {
+        dates[i].lunchCol = nextCol
+      }
+    }
   }
 
   // Extract members from rows after "日期"
@@ -52,12 +66,20 @@ export function parseRawData(data: string[][]): ParsedData {
     }
 
     const attendance: Record<string, string> = {}
+    const lunch: Record<string, string> = {}
+
     dates.forEach((d) => {
       const val = (row[d.col] || '').trim()
       attendance[d.label] = val
+
+      // 解析帶便當欄位
+      if (d.lunchCol !== undefined) {
+        const lunchVal = (row[d.lunchCol] || '').trim()
+        lunch[d.label] = lunchVal
+      }
     })
 
-    members.push({ row: r + 1, name, group, attendance })
+    members.push({ row: r + 1, name, group, attendance, lunch })
   }
 
   return { dateRow: dateRow + 1, dateCol, dates, members }
@@ -72,6 +94,12 @@ export function getAttendanceStatus(
   if (v === '△' || v === 'Δ' || v === '遲到') return 'late'
   if (v) return 'absent'
   return 'none'
+}
+
+export function getLunchStatus(value: string): boolean {
+  if (!value) return false
+  const v = value.trim().toLowerCase()
+  return v === 'v' || v === '是' || v === '✓' || v === '1'
 }
 
 export function formatDateLabel(date: Date): string {

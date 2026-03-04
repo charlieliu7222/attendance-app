@@ -49,6 +49,7 @@ type AppAction =
   | { type: 'GO_BACK' }
   | { type: 'REFRESH_DATA'; rawData: string[][]; parsed: ParsedData }
   | { type: 'UPDATE_MEMBER_ATTENDANCE'; memberIndex: number; dateLabel: string; value: string }
+  | { type: 'UPDATE_MEMBER_LUNCH'; memberIndex: number; dateLabel: string; value: string }
 
 function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
@@ -121,6 +122,24 @@ function appReducer(state: AppState, action: AppAction): AppState {
           ...m,
           attendance: {
             ...m.attendance,
+            [action.dateLabel]: action.value,
+          },
+        }
+      })
+      return {
+        ...state,
+        parsedData: { ...state.parsedData, members: newMembers },
+      }
+    }
+
+    case 'UPDATE_MEMBER_LUNCH': {
+      if (!state.parsedData) return state
+      const newMembers = state.parsedData.members.map((m, i) => {
+        if (i !== action.memberIndex) return m
+        return {
+          ...m,
+          lunch: {
+            ...m.lunch,
             [action.dateLabel]: action.value,
           },
         }

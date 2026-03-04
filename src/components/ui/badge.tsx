@@ -11,6 +11,7 @@ const badgeVariants = cva(
         present: "bg-[rgba(74,158,111,0.12)] text-[#2D6E4A]",
         late: "bg-[rgba(212,162,78,0.15)] text-[#8B6914]",
         absent: "bg-[rgba(199,91,91,0.12)] text-[#8B2E2E]",
+        lunch: "bg-[rgba(91,158,170,0.12)] text-[#2D616E]",
       },
     },
     defaultVariants: {
