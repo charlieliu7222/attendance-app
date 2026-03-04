@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   manifest: './manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
+    statusBarStyle: 'black-translucent',
     title: 'LaiClass',
   },
   icons: {
@@ -18,10 +18,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
   userScalable: false,
   themeColor: '#4A9E6F',
-  viewportFit: 'cover',
 }
 
 export default function RootLayout({
