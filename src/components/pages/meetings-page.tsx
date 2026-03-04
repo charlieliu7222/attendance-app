@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAppState } from '@/hooks/use-app-state'
 import { MeetingCard } from '@/components/cards/meeting-card'
 import { AddMeetingDialog } from '@/components/modals/add-meeting-dialog'
+import { EditMeetingDialog } from '@/components/modals/edit-meeting-dialog'
 import { ConfirmDeleteDialog } from '@/components/modals/confirm-delete-dialog'
 import { Fab } from '@/components/fab'
 import { api } from '@/lib/api'
@@ -13,6 +14,8 @@ export function MeetingsPage() {
   const { state, dispatch, loadMeetings, openMeeting } = useAppState()
   const [showAdd, setShowAdd] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null)
+  const [editTarget, setEditTarget] = useState<string | null>(null)
+  const [swipedOpen, setSwipedOpen] = useState<string | null>(null)
 
   useEffect(() => {
     loadMeetings()
@@ -26,6 +29,18 @@ export function MeetingsPage() {
     saveCache('sheets', null)
     await loadMeetings()
     setDeleteTarget(null)
+    setSwipedOpen(null)
+  }
+
+  const handleEdit = async (newName: string) => {
+    if (!editTarget || newName === editTarget) return
+    dispatch({ type: 'SET_LOADING', loading: true })
+    await api.renameSheet(editTarget, newName)
+    dispatch({ type: 'SET_LOADING', loading: false })
+    saveCache('sheets', null)
+    await loadMeetings()
+    setEditTarget(null)
+    setSwipedOpen(null)
   }
 
   const handleAdd = async (name: string) => {
@@ -48,8 +63,18 @@ export function MeetingsPage() {
           <MeetingCard
             key={name}
             name={name}
+            isOpen={swipedOpen === name}
             onOpen={() => openMeeting(name)}
-            onDelete={() => setDeleteTarget(name)}
+            onEdit={() => {
+              setEditTarget(name)
+              setSwipedOpen(null)
+            }}
+            onDelete={() => {
+              setDeleteTarget(name)
+              setSwipedOpen(null)
+            }}
+            onSwipeOpen={() => setSwipedOpen(name)}
+            onSwipeClose={() => setSwipedOpen(null)}
           />
         ))}
       </div>
@@ -60,6 +85,13 @@ export function MeetingsPage() {
         open={showAdd}
         onOpenChange={setShowAdd}
         onAdd={handleAdd}
+      />
+
+      <EditMeetingDialog
+        open={!!editTarget}
+        onOpenChange={(open) => !open && setEditTarget(null)}
+        currentName={editTarget || ''}
+        onSave={handleEdit}
       />
 
       <ConfirmDeleteDialog

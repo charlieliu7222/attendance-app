@@ -51,6 +51,9 @@ export const api = {
 
   deleteSheet: (sheet: string) => apiCall({ action: 'deleteSheet', sheet }),
 
+  renameSheet: (sheet: string, newName: string) =>
+    apiCall({ action: 'renameSheet', sheet, newName }),
+
   deleteCol: (sheet: string, col: number) =>
     apiCall({ action: 'deleteCol', sheet, col: String(col) }),
 }
