@@ -50,6 +50,7 @@ type AppAction =
   | { type: 'REFRESH_DATA'; rawData: string[][]; parsed: ParsedData }
   | { type: 'UPDATE_MEMBER_ATTENDANCE'; memberIndex: number; dateLabel: string; value: string }
   | { type: 'UPDATE_MEMBER_LUNCH'; memberIndex: number; dateLabel: string; value: string }
+  | { type: 'MERGE_LUNCH_DATA'; dateLabel: string; lunchMap: Record<string, string> }
 
 function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
@@ -141,6 +142,25 @@ function appReducer(state: AppState, action: AppAction): AppState {
           lunch: {
             ...m.lunch,
             [action.dateLabel]: action.value,
+          },
+        }
+      })
+      return {
+        ...state,
+        parsedData: { ...state.parsedData, members: newMembers },
+      }
+    }
+
+    case 'MERGE_LUNCH_DATA': {
+      if (!state.parsedData) return state
+      const newMembers = state.parsedData.members.map((m) => {
+        const lunchVal = action.lunchMap[m.name]
+        if (lunchVal === undefined) return m
+        return {
+          ...m,
+          lunch: {
+            ...m.lunch,
+            [action.dateLabel]: lunchVal,
           },
         }
       })

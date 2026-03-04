@@ -102,6 +102,42 @@ export function getLunchStatus(value: string): boolean {
   return v === 'v' || v === '是' || v === '✓' || v === '1'
 }
 
+/**
+ * 解析第二個 Google Sheet（用餐統計表）的原始資料
+ * 格式：乾/坤 | 名字 | 職稱 | 出席(v/x) | 帶便當(v/x) | 備註
+ * 回傳 Record<名字, 帶便當值>
+ */
+export function parseLunchSheet(data: string[][]): Record<string, string> {
+  const result: Record<string, string> = {}
+
+  // 在前 5 行找「帶便當」header
+  let lunchCol = -1
+  for (let r = 0; r < Math.min(5, data.length); r++) {
+    for (let c = 0; c < data[r].length; c++) {
+      if (data[r][c].trim() === '帶便當') {
+        lunchCol = c
+        break
+      }
+    }
+    if (lunchCol >= 0) break
+  }
+
+  if (lunchCol < 0) return result
+
+  // 名字在 B 欄 (index 1)
+  const nameCol = 1
+
+  for (let r = 0; r < data.length; r++) {
+    const name = (data[r][nameCol] || '').trim()
+    if (!name) continue // 跳過組別標題和空行
+
+    const lunchVal = (data[r][lunchCol] || '').trim()
+    result[name] = lunchVal
+  }
+
+  return result
+}
+
 export function formatDateLabel(date: Date): string {
   const mm = String(date.getMonth() + 1).padStart(2, '0')
   const dd = String(date.getDate()).padStart(2, '0')
