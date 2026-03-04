@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laiclass-v1';
+const CACHE_NAME = 'laiclass-v2';
 
 self.addEventListener('install', () => {
   self.skipWaiting();
