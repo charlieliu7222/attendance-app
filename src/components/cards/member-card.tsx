@@ -36,7 +36,7 @@ export function MemberCard({ name, status, reason, hasLunch, onSetStatus, onTogg
         <div className="flex items-center gap-1.5">
           <Badge variant={badgeVariant[status]}>{statusLabels[status]}</Badge>
           {hasLunch && (
-            <Badge variant="lunch">帶便當</Badge>
+            <Badge variant="lunch">用餐</Badge>
           )}
         </div>
       </div>
@@ -55,7 +55,7 @@ export function MemberCard({ name, status, reason, hasLunch, onSetStatus, onTogg
           出席
         </button>
 
-        {/* 帶便當 — 獨立 toggle */}
+        {/* 用餐 — 獨立 toggle */}
         {onToggleLunch && (
           <button
             onClick={onToggleLunch}
@@ -66,7 +66,7 @@ export function MemberCard({ name, status, reason, hasLunch, onSetStatus, onTogg
                 : 'border-border bg-white/60 text-text-secondary'
             )}
           >
-            帶便當
+            用餐
           </button>
         )}
 

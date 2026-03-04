@@ -4,7 +4,7 @@
 //
 // Sheet 格式：
 //   Row 1: 日期 | (合併標題)
-//   Row 2: (空) | (空) | (空) | 出席 | 帶便當 | 備註
+//   Row 2: (空) | (空) | (空) | 出席 | 用餐/帶便當 | 備註
 //   Row 3+: 乾/坤 | 名字 | 職稱 | v/x | v/x | 備註文字
 //
 // 部署步驟：
@@ -42,7 +42,7 @@ function doGet(e) {
       return json({ success: true, data: data });
     }
 
-    // 根據名字更新「帶便當」欄位
+    // 根據名字更新「用餐」欄位
     if (action === 'updateLunch') {
       var sheet = ss.getSheetByName(e.parameter.sheet);
       if (!sheet) return json({ success: false, error: '找不到分頁' });
@@ -51,11 +51,12 @@ function doGet(e) {
       var memberName = e.parameter.name;
       var value = e.parameter.value;
 
-      // 找到「帶便當」欄位（在前 5 行的 header 中搜尋）
+      // 找到「用餐」或「帶便當」欄位（在前 5 行的 header 中搜尋）
       var lunchCol = -1;
       for (var r = 0; r < Math.min(5, data.length); r++) {
         for (var c = 0; c < data[r].length; c++) {
-          if (String(data[r][c]).trim() === '帶便當') {
+          var h = String(data[r][c]).trim();
+          if (h === '用餐' || h === '帶便當') {
             lunchCol = c;
             break;
           }
@@ -63,7 +64,7 @@ function doGet(e) {
         if (lunchCol >= 0) break;
       }
 
-      if (lunchCol < 0) return json({ success: false, error: '找不到帶便當欄位' });
+      if (lunchCol < 0) return json({ success: false, error: '找不到用餐欄位' });
 
       // 用名字比對（名字在 B 欄 = index 1）
       var nameCol = 1;

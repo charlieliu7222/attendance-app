@@ -24,7 +24,7 @@ export function parseRawData(data: string[][]): ParsedData {
   const dates: DateInfo[] = []
   for (let c = dateCol + 1; c < data[dateRow].length; c++) {
     const val = data[dateRow][c].trim()
-    if (!val || val === '帶便當') continue
+    if (!val || val === '帶便當' || val === '用餐') continue
     dates.push({ col: c, label: val })
   }
 
@@ -35,7 +35,7 @@ export function parseRawData(data: string[][]): ParsedData {
     const isNextDate = dates.some((d) => d.col === nextCol)
     if (!isNextDate && nextCol < data[dateRow].length) {
       const headerVal = (data[dateRow][nextCol] || '').trim()
-      if (headerVal === '帶便當') {
+      if (headerVal === '帶便當' || headerVal === '用餐') {
         dates[i].lunchCol = nextCol
       }
     }
@@ -104,17 +104,18 @@ export function getLunchStatus(value: string): boolean {
 
 /**
  * 解析第二個 Google Sheet（用餐統計表）的原始資料
- * 格式：乾/坤 | 名字 | 職稱 | 出席(v/x) | 帶便當(v/x) | 備註
- * 回傳 Record<名字, 帶便當值>
+ * 格式：乾/坤 | 名字 | 職稱 | 出席(v/x) | 用餐/帶便當(v/x) | 備註
+ * 回傳 Record<名字, 用餐值>
  */
 export function parseLunchSheet(data: string[][]): Record<string, string> {
   const result: Record<string, string> = {}
 
-  // 在前 5 行找「帶便當」header
+  // 在前 5 行找「用餐」或「帶便當」header
   let lunchCol = -1
   for (let r = 0; r < Math.min(5, data.length); r++) {
     for (let c = 0; c < data[r].length; c++) {
-      if (data[r][c].trim() === '帶便當') {
+      const h = data[r][c].trim()
+      if (h === '用餐' || h === '帶便當') {
         lunchCol = c
         break
       }

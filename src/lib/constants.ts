@@ -5,7 +5,8 @@ export const API_URL =
 // 第二個 Google Sheet（含帶便當欄位）
 // TODO: 部署 Google Apps Script 後，將 URL 貼在這裡
 // 對應試算表: https://docs.google.com/spreadsheets/d/1Oo3xKHEnG70c0-s96lr0_iJC9wbM8fJtAYYIjqwHrd4/edit?gid=798030162
-export const API_URL_2 = ''
+export const API_URL_2 =
+  'https://script.google.com/macros/s/AKfycbyI-02zaJ_aryXkCDyX3KPMdCXmKlbciCj3JTgPIRZTBsPU3Ucz9aVZDiBWCPjTj2ib/exec'
 
 export const APP_PASSWORD = '29549604'
 
