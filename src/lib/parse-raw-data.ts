@@ -79,5 +79,5 @@ export function formatDateLabel(date: Date): string {
   const dd = String(date.getDate()).padStart(2, '0')
   const days = ['日', '一', '二', '三', '四', '五', '六']
   const day = days[date.getDay()]
-  return `${mm}/${dd}${day}`
+  return `${mm}/${dd}(${day})`
 }
