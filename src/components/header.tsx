@@ -8,7 +8,7 @@ export function Header() {
   const showBack = state.currentPage !== 'meetings'
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] flex h-[calc(56px+env(safe-area-inset-top))] items-center px-2 pt-[env(safe-area-inset-top)] glass-header border-b border-[rgba(74,158,111,0.08)]">
+    <header className="fixed top-0 left-0 right-0 z-[100] flex h-[calc(56px_+_env(safe-area-inset-top,0px))] items-center px-2 pt-[env(safe-area-inset-top,0px)] glass-header border-b border-[rgba(74,158,111,0.08)]">
       {showBack ? (
         <button
           onClick={() => dispatch({ type: 'GO_BACK' })}

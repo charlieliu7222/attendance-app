@@ -14,7 +14,7 @@ export function AppShell() {
   return (
     <>
       <Header />
-      <main className="pt-[calc(56px+env(safe-area-inset-top)+20px)] pb-[calc(88px+env(safe-area-inset-bottom))] px-4">
+      <main className="pt-[calc(56px_+_env(safe-area-inset-top,0px)_+_20px)] pb-[calc(88px_+_env(safe-area-inset-bottom,0px))] px-4">
         {state.currentPage === 'meetings' && <MeetingsPage />}
         {state.currentPage === 'sessions' && <SessionsPage />}
         {state.currentPage === 'members' && <MembersPage />}

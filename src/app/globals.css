@@ -57,18 +57,35 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #F7F6F1;
   color: #2C3E2D;
-  min-height: 100vh;
+  min-height: 100%;
   -webkit-user-select: none;
   user-select: none;
+  /* Use ::before pseudo-element for fixed background on iOS */
+  position: relative;
+}
+
+/* Fixed background via pseudo-element (iOS compatible) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: #F7F6F1;
   background-image:
     radial-gradient(ellipse at 20% 80%, rgba(74, 158, 111, 0.06) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(212, 162, 78, 0.05) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(107, 191, 138, 0.03) 0%, transparent 70%);
-  background-attachment: fixed;
 }
 
 /* Glass effects */
@@ -94,6 +111,12 @@ body {
 /* Card shadow */
 .shadow-card {
   box-shadow: 0 2px 12px rgba(44, 62, 45, 0.06), 0 1px 3px rgba(44, 62, 45, 0.04);
+}
+
+/* PWA standalone: prevent overscroll bounce */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Hide scrollbar */

@@ -34,7 +34,7 @@ const AlertDialogContent = React.forwardRef<
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-[500px] glass-modal rounded-t-[20px] p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] border-t border-glass-border",
+        "fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-[500px] glass-modal rounded-t-[20px] p-6 pb-[calc(1.5rem_+_env(safe-area-inset-bottom,0px))] border-t border-glass-border",
         "animate-slide-up",
         className
       )}
