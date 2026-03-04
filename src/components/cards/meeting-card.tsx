@@ -14,8 +14,8 @@ interface MeetingCardProps {
   onSwipeClose: () => void
 }
 
-const ACTION_WIDTH = 120 // 兩個按鈕的總寬度
-const THRESHOLD = 50 // 滑動超過此距離才吸附開啟
+const ACTION_WIDTH = 88 // 兩個 icon 按鈕 + 間距
+const THRESHOLD = 40 // 滑動超過此距離才吸附開啟
 
 export function MeetingCard({
   name,
@@ -96,19 +96,19 @@ export function MeetingCard({
 
   return (
     <div className="relative overflow-hidden rounded-2xl">
-      {/* 底層操作按鈕 */}
-      <div className="absolute right-0 top-0 bottom-0 flex">
+      {/* 底層操作按鈕 — 白底 + 彩色 icon 線條 */}
+      <div className="absolute right-0 top-0 bottom-0 flex items-center gap-1 bg-white/90 pr-3 pl-2">
         <button
           onClick={onEdit}
-          className="flex w-[60px] items-center justify-center bg-blue text-white transition-colors active:bg-blue/80"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-text-secondary opacity-60 transition-all active:bg-primary-glow active:text-primary-dark active:opacity-100"
         >
-          <Pencil size={18} />
+          <Pencil size={16} />
         </button>
         <button
           onClick={onDelete}
-          className="flex w-[60px] items-center justify-center bg-danger text-white transition-colors active:bg-danger/80"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-text-secondary opacity-60 transition-all active:bg-[rgba(199,91,91,0.1)] active:text-[#8B2E2E] active:opacity-100"
         >
-          <Trash2 size={18} />
+          <Trash2 size={16} />
         </button>
       </div>
 
