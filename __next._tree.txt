@@ -1,2 +1,2 @@
-:HL["/attendance-app/_next/static/chunks/8927afb7ee7878c6.css","style"]
-0:{"buildId":"w7yHVhU0Sw6DJGb1EhkiM","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+:HL["/attendance-app/_next/static/chunks/77e0163756b88554.css","style"]
+0:{"buildId":"qeQC41f2L5epQYmTOD5Mo","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
