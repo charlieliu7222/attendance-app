@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
 2:I[47257,["/attendance-app/_next/static/chunks/2f236954d6a65e12.js"],"ClientPageRoot"]
-3:I[52683,["/attendance-app/_next/static/chunks/a9599f99ff026bee.js"],"default"]
+3:I[52683,["/attendance-app/_next/static/chunks/1a838b72d93501e9.js"],"default"]
 6:I[97367,["/attendance-app/_next/static/chunks/2f236954d6a65e12.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"buildId":"Vy3ARyJy_TTi0TNciP4t7","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/attendance-app/_next/static/chunks/a9599f99ff026bee.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"HhM5v0ZJjr4bzHTtF7wHA","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/attendance-app/_next/static/chunks/1a838b72d93501e9.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
